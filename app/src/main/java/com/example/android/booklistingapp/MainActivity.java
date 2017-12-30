@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onClick(View view) {
 
+
                 REQUEST_URL = REQUEST_URL + searchResults;
 
                 mAdapter = new BookAdapter(MainActivity.this, new ArrayList<Book>());
@@ -91,32 +92,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
-    public String getSearchInput( ) {
-        return searchInput.getText().toString().trim();
-    }
 
-    public void displayMessage(String reminderText ) {
-        messageToDisplay.setText(reminderText);
-    }
 
     @Override
     public Loader<List<Book>> onCreateLoader(int i, Bundle bundle) {
-        mAdapter.clear();
+
         return new BookLoader(this, REQUEST_URL);
     }
 
     @Override
     public void onLoadFinished(Loader<List<Book>> loader, List<Book> books) {
 
+        mAdapter.clear();
 
-        if (books == null){
-            return;
+        if (books != null && !books.isEmpty()){
+
+            mAdapter.addAll(books);
+
         }
 
-        mAdapter.clear();
-        mAdapter.addAll(books);
-        mAdapter.notifyDataSetChanged();
 
+        mAdapter.notifyDataSetChanged();
 
 
     }
